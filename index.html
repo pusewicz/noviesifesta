@@ -1,0 +1,89 @@
+---
+layout: default
+title: Bienvenido
+group: navigation
+---
+
+<div class="container-gallery"><div id="gallery"></div></div>
+<div class="container container-about">
+  <h2 class="page-heading">Novies i Festa</h2>
+  <p>Novies i Festa de Benicarló cuenta con una propuesta elegante y perfecta para vuestro mejor día. Una cuidada selección de vestidos de novia y fiesta entre los que seguro podréis encontrar el modelo que buscáis. Diferentes estilos que se adaptarán perfectamente a ti, para los trajes de novia contamos las firmas más relevantes del momento como LA SPOSA (PRONOVIAS FASHION GROUP), ADRIANA ALIER y LUNA NOVIAS (GRUPO ROSA CLARA) personalizando cada diseño, desde el más sobrio y elegante, hasta el más atrevido.</p>
+</div>
+
+<div class="container-map">
+  <h2 class="page-heading">Direccion</h2>
+  <div id="map-wrapper" data-map-name="{{ site.title }}" data-map-address="49 Carrer del Crist de la Mar, 12580, Benicarló, Castellón" data-map-image="{{ "/images/novies-i-festa-tienda.jpg" | prepend: site.baseurl }}" data-map-lat="40.4174731" data-map-lng="0.4279508" data-map-zoom="16"></div>
+</div>
+
+<div class="container container-olga">
+  <h2 class="page-heading">Olga Ferreres</h2>
+  <img src="{{ "/images/olga-ferreres.jpg" | prepend: site.baseurl }}" alt="Olga Ferreres" class="avatar">
+</div>
+
+<div class="container-contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="page-heading">Contacta con Nosotros</h2>
+
+        <div class="contact-information">
+          Cita previa al telefono <a href="tel:+34964472626">964 47 26 26</a> o WhatsApp <a href="tel:+34618367529">618 367 529</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+<script>
+  $('#gallery').backstretch([
+      "{{ "/images/novies-i-festa-1.jpg" | prepend: site.baseurl }}"
+    , "{{ "/images/novies-i-festa-2.jpg" | prepend: site.baseurl }}"
+    , "{{ "/images/novies-i-festa-3.jpg" | prepend: site.baseurl }}"
+    , "{{ "/images/novies-i-festa-4.jpg" | prepend: site.baseurl }}"
+    , "{{ "/images/novies-i-festa-5.jpg" | prepend: site.baseurl }}"
+    , "{{ "/images/novies-i-festa-6.jpg" | prepend: site.baseurl }}"
+    , "{{ "/images/novies-i-festa-7.jpg" | prepend: site.baseurl }}"
+  ], {duration: 3000, fade: 750});
+
+  $('.container-contact').backstretch("{{ "/images/contact.jpg" | prepend: site.baseurl }}");
+</script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+<script>
+  function bindInfoWindow(marker, map, infoWindow, html) {
+    google.maps.event.addListener(marker, 'click', function() {
+      infoWindow.setContent(html);
+      infoWindow.open(map, marker);
+    });
+
+    infoWindow.setContent(html);
+    infoWindow.open(map, marker);
+  }
+
+  function initialize() {
+    var name = $("#map-wrapper").data("map-name"),
+      address = $("#map-wrapper").data("map-address"),
+      image = $("#map-wrapper").data("map-image"),
+      lat = $("#map-wrapper").data("map-lat"),
+      lng = $("#map-wrapper").data("map-lng"),
+      zoom = $("#map-wrapper").data("map-zoom");
+    var infoWindow = new google.maps.InfoWindow;
+    var html = "<div class='map-thumbnail'><img src='" + image + "' width='60' /></div><div class='map-detail'><a><b>" + name + "</b></a> <br/>" + address + '</div><div style="clear:both;"></div></div>';
+    var map = new google.maps.Map(document.getElementById("map-wrapper"), {
+      center: new google.maps.LatLng(lat,lng),
+      zoom: zoom,
+      mapTypeId: 'roadmap',
+      scrollwheel: false
+    });
+
+    var marker = new google.maps.Marker({
+      map: map,
+      position: map.getCenter(),
+    });
+
+    bindInfoWindow(marker, map, infoWindow, html);
+  };
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>

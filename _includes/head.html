@@ -1,0 +1,16 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+<meta name="author" content="{{ site.author.name }}">
+
+<link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+<link href="{{ "/css/main.css" | prepend: site.baseurl }}" rel="stylesheet">
+
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+<![endif]-->
+
+<link href="{{ "/atom.xml" | prepend: site.baseurl }}" type="application/atom+xml" rel="alternate" title="{{ site.title }} ATOM Feed">
+<link href="{{ "/rss.xml" | prepend: site.baseurl }}" type="application/rss+xml" rel="alternate" title="{{ site.title }} RSS Feed">

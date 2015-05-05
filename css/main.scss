@@ -1,0 +1,36 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+@import 'bootstrap';
+@import 'bootstrap-theme';
+
+@import url("http://fonts.googleapis.com/css?family=Arimo:400,700");
+@import url("http://fonts.googleapis.com/css?family=Montserrat:400,700");
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:400,700");
+
+body {
+  background-color: #fff;
+  font: 15px/150% "Arimo", Helvetica, Arial, sans-serif;
+  color: #555;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  p {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  }
+}
+
+input, textarea {
+  font: 100% "Arimo", Arial, Helvetica, sans-serif;
+}
+
+nav {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.container {
+  max-width: 760px;
+}
+
+@import 'layout';

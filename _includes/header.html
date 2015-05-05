@@ -1,0 +1,35 @@
+<header id="header">
+  <a class="brand " href="{{ site.base_url }}"><img src="{{ '/images/logo.png' | prepend: site.baseurl }}" alt="{{ site.title }} Logo" class="img-responsive"></a>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          {% assign pages_list = site.pages %}
+          {% assign group = 'navigation' %}
+          {% for node in pages_list %}
+            {% if node.title != null %}
+              {% if group == null or group == node.group %}
+                {% if page.url == node.url %}
+                <li class="active"><a href="{{ node.url | prepend: site.baseurl }}" class="active">{{node.title}}</a></li>
+                {% else %}
+                <li><a href="{{ node.url | prepend: site.baseurl }}">{{node.title}}</a></li>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% assign pages_list = nil %}
+          {% assign group = nil %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
