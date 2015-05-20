@@ -74,7 +74,10 @@ module Gallery
     private
 
     def gallery(site)
-      Dir[File.join(site.config["source"], 'images/gallery/**/*.jpg')].delete_if { |i| i =~ /thumb/ }.map { |i| Image.new(i) }
+      root = site.config["source"]
+      files = Dir[File.join(root, 'images/gallery/**/*.jpg')].delete_if { |i| i =~ /thumb/ }.map { |i| Image.new(i) }
+      raise "No files in #{root}" if files.empty?
+      files
     end
   end
 end
