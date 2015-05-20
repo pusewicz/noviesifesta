@@ -1,5 +1,5 @@
 #header {
-  @extend .text-center;
+  text-align: center;
   position: relative;
 
   nav {
@@ -93,4 +93,21 @@
       max-width: 640px;
     }
   }
+}
+
+.my-gallery {
+  figure {
+    display: inline-block;
+    width: 92px;
+    height: 120px;
+    img {
+      width: 92px;
+    height: 120px;
+    }
+  }
+
+  figcaption {
+    display: none;
+  }
+
 }
