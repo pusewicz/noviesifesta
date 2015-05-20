@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 gem 'github-pages'
 gem 'fastimage'
+gem 'ruby-vips'
 gem 'vips-process'

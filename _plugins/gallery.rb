@@ -1,24 +1,27 @@
 require 'fastimage'
+require 'vips'
+require 'vips-process'
+require 'vips-process/resize'
+require 'vips-process/quality'
+require 'vips-process/base'
 
 module Gallery
-  class Image
+  class Image < Vips::Process::Base
     include Vips::Process
     include Vips::Process::Resize
     include Vips::Process::Quality
 
-    attr_reader :path, :src, :dst
+    attr_reader :path
 
-    def initialize(path)
-      @path = path
+    version(:thumb)   { resize_to_fit(92, 120) }
+
+    def initialize(*)
+      super
       generate_thumbnail
     end
 
-    def src
-      path
-    end
-
-    def dst
-      thumbnail_path
+    def path
+      src
     end
 
     def size
@@ -26,12 +29,12 @@ module Gallery
     end
 
     def name
-      File.basename(path).split(/-|_/).first
+      File.basename(path).split(/-|_/).first.capitalize
     end
 
     def manufacturer
       parts = File.dirname(path).split('/')
-      [parts[2], parts[3]].compact.join(' ')
+      [parts[2], parts[3]].compact.join(' ').gsub('-', ' ').gsub(/\b(?<!['â`])[a-z]/) { $&.capitalize }
     end
 
     def alt
@@ -47,18 +50,17 @@ module Gallery
         'path' => path,
         'size' => size,
         'name' => name,
-        'alt' => alt
+        'alt' => alt,
+        'thumbnail_path' => thumbnail_path
       }
     end
 
     private
 
     def generate_thumbnail
-      resize_to_fit(92, 120).process!
-    end
-
-    def image
-      @image ||= EasyImage.new(path, 'image/jpeg')
+      return if File.exist?(thumbnail_path)
+      puts "Generating #{thumbnail_path}..."
+      thumb_version thumbnail_path
     end
   end
 
@@ -71,7 +73,7 @@ module Gallery
     private
 
     def gallery
-      Dir['images/gallery/**/*.jpg'].map { |i| Image.new(i) }
+      Dir['images/gallery/**/*.jpg'].delete_if { |i| i =~ /thumb/ }.map { |i| Image.new(i) }
     end
   end
 end

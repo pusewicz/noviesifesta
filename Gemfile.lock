@@ -131,4 +131,5 @@ PLATFORMS
 DEPENDENCIES
   fastimage
   github-pages
+  ruby-vips
   vips-process
