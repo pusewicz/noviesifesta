@@ -4,6 +4,7 @@ require 'vips-process'
 require 'vips-process/resize'
 require 'vips-process/quality'
 require 'vips-process/base'
+require 'byebug'
 
 module Gallery
   class Image < Vips::Process::Base
@@ -67,13 +68,13 @@ module Gallery
   class Generator < Jekyll::Generator
     def generate(site)
       index = site.pages.detect { |page| page.name == 'index.html' }
-      index.data['gallery'] = gallery
+      index.data['gallery'] = gallery(site)
     end
 
     private
 
-    def gallery
-      Dir['images/gallery/**/*.jpg'].delete_if { |i| i =~ /thumb/ }.map { |i| Image.new(i) }
+    def gallery(site)
+      Dir[File.join(site.config["source"], 'images/gallery/**/*.jpg')].delete_if { |i| i =~ /thumb/ }.map { |i| Image.new(i) }
     end
   end
 end
