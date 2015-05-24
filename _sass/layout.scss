@@ -96,14 +96,14 @@
 }
 
 .my-gallery {
-  figure {
+  clear: both;
+  overflow: auto;
+
+  figure, a, img {
     display: inline-block;
     width: 92px;
     height: 120px;
-    img {
-      width: 92px;
-    height: 120px;
-    }
+    float: left;
   }
 
   figcaption {

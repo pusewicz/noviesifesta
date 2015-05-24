@@ -1,28 +1,13 @@
 require 'fastimage'
-require 'vips'
-require 'vips-process'
-require 'vips-process/resize'
-require 'vips-process/quality'
-require 'vips-process/base'
-require 'byebug'
 
 module Gallery
-  class Image < Vips::Process::Base
-    include Vips::Process
-    include Vips::Process::Resize
-    include Vips::Process::Quality
-
-    attr_reader :path
-
-    version(:thumb)   { resize_to_fit(92, 120) }
-
-    def initialize(*)
-      super
-      generate_thumbnail
+  class Image
+    def initialize(src)
+      @src = src
     end
 
     def path
-      src
+      @src
     end
 
     def size
@@ -58,11 +43,10 @@ module Gallery
 
     private
 
-    def generate_thumbnail
-      return if File.exist?(thumbnail_path)
-      puts "Generating #{thumbnail_path}..."
-      thumb_version thumbnail_path
-    end
+    #def generate_thumbnail
+      #return if File.exist?(thumbnail_path)
+      #thumb_version thumbnail_path
+    #end
   end
 
   class Generator < Jekyll::Generator
@@ -75,7 +59,7 @@ module Gallery
 
     def gallery(site)
       root = site.config["source"]
-      files = Dir[File.join(root, 'images/gallery/**/*.jpg')].delete_if { |i| i =~ /thumb/ }.map { |i| Image.new(i) }
+      files = Dir['images/gallery/**/*.jpg'].delete_if { |i| i =~ /thumb/ }.map { |i| Image.new(i) }
       raise "No files in #{root}" if files.empty?
       files
     end
